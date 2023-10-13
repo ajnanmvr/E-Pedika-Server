@@ -10,11 +10,6 @@ const dataSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    url: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     category: {
       type: mongoose.Types.ObjectId,
       required: true,
@@ -28,6 +23,21 @@ const dataSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      unique: true, 
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    discountPrice: {
+      type: Number,
+    },
+    specs: {
+      type: [String],
+    },
   },
   {
     timestamps: true,
@@ -38,6 +48,7 @@ dataSchema.pre("find", function (next) {
   this.populate("category");
   next();
 });
-const DataModel = mongoose.model("WebSites", dataSchema);
+
+const DataModel = mongoose.model("items", dataSchema);
 
 module.exports = DataModel;

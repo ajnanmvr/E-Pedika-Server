@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const DataModel = require("../Models/dataModel"); // Replace with the actual path to your DataModel file
+const DataModel = require("../Models/dataModel");
+const CategoryModel = require("../Models/categoryModel");
 const { protect, isAdmin } = require("../utils/authMiddleware");
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
@@ -16,9 +17,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-cloudinary.config({ 
-  cloud_name: 'djzorlpcg', 
-  api_key: '933947299169584',
+cloudinary.config({
+  cloud_name: "djzorlpcg",
+  api_key: "933947299169584",
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
@@ -44,7 +45,6 @@ router.post(
         .catch((err) => {
           console.log("cloudinary error", err);
         });
-
       const newData = await DataModel.create({
         ...req.body,
         published: true,
@@ -70,7 +70,6 @@ router.get("/", async (req, res, next) => {
     let query = { published: true };
 
     if (req.query.category && req.query.category !== "all") {
-      // Assuming req.query.category is the ObjectId for the category
       query.category = mongoose.Types.ObjectId(req.query.category);
     }
 
@@ -96,10 +95,11 @@ router.get("/type/suggestion", async (req, res, next) => {
   }
 });
 
-// Read a single data model by ID
-router.get("/:id", async (req, res, next) => {
+
+// Read a single data model by slug
+router.get("/:slug", async (req, res, next) => {
   try {
-    const data = await DataModel.findById(req.params.id);
+    const data = await DataModel.findOne({ slug: req.params.slug });
     if (!data) {
       res.status(404).json({ error: "Data not found" });
     } else {
