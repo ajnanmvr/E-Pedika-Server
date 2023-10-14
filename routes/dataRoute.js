@@ -98,7 +98,7 @@ router.get("/type/suggestion", async (req, res, next) => {
 // Read a single data model by ID
 router.get("/i/:id", async (req, res, next) => {
   try {
-    const data = await DataModel.findById(req.params.id);
+    const data = await DataModel.findById(req.params.id).populate('category')
     if (!data) {
       res.status(404).json({ error: "Data not found" });
     } else {
@@ -111,7 +111,7 @@ router.get("/i/:id", async (req, res, next) => {
 // Read a single data model by slug
 router.get("/s/:slug", async (req, res, next) => {
   try {
-    const data = await DataModel.findOne({ slug: req.params.slug });
+    const data = await DataModel.findOne({ slug: req.params.slug }).populate('category');
     if (!data) {
       res.status(404).json({ error: "Data not found" });
     } else {
