@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const DataModel = require("../Models/dataModel");
-const CategoryModel = require("../Models/categoryModel");
+const DataModel = require("../models/dataModel");
+const CategoryModel = require("../models/categoryModel");
 const { protect, isAdmin } = require("../utils/authMiddleware");
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
