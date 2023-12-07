@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const DataModel = require("../models/dataModel");
+const DataModel = require("../Models/dataModel");
+const CategoryModel = require("../Models/categoryModel");
 const { protect, isAdmin } = require("../utils/authMiddleware");
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
@@ -97,7 +98,7 @@ router.get("/type/suggestion", async (req, res, next) => {
 // Read a single data model by ID
 router.get("/i/:id", async (req, res, next) => {
   try {
-    const data = await DataModel.findById(req.params.id).populate("category");
+    const data = await DataModel.findById(req.params.id).populate('category')
     if (!data) {
       res.status(404).json({ error: "Data not found" });
     } else {
@@ -110,9 +111,7 @@ router.get("/i/:id", async (req, res, next) => {
 // Read a single data model by slug
 router.get("/s/:slug", async (req, res, next) => {
   try {
-    const data = await DataModel.findOne({ slug: req.params.slug }).populate(
-      "category"
-    );
+    const data = await DataModel.findOne({ slug: req.params.slug }).populate('category');
     if (!data) {
       res.status(404).json({ error: "Data not found" });
     } else {

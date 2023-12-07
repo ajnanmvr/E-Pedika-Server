@@ -25,7 +25,10 @@ mongoose.set("strictQuery", false);
 
 // Connect to the MongoDB database
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to the database");
   })

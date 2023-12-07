@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/usermodel"); // Replace with the actual path to your User model
+const User = require("../Models/usermodel"); // Replace with the actual path to your User model
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { protect } = require("../utils/authMiddleware");
